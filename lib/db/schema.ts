@@ -85,6 +85,8 @@ export const businesses = pgTable('businesses', {
   subscription_tier: subscriptionTierEnum('subscription_tier').notNull().default('free'),
   verified: boolean('verified').notNull().default(false),
   owner_id: text('owner_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
+  sync_token: text('sync_token').unique(),
+  last_synced_at: timestamp('last_synced_at', { mode: 'string' }),
 })
 
 export const listings = pgTable('listings', {
@@ -99,6 +101,7 @@ export const listings = pgTable('listings', {
   lead_time_days: integer('lead_time_days'),
   in_stock: boolean('in_stock').notNull().default(true),
   category: businessCategoryEnum('category').notNull(),
+  external_id: text('external_id'),
 })
 
 export const needs = pgTable('needs', {

@@ -6,6 +6,7 @@ import { businesses, listings, needs } from '@/lib/db/schema'
 import { eq } from 'drizzle-orm'
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { randomBytes } from 'crypto'
 import type { BusinessCategory, BusinessType } from '@/types'
 
 interface CreateBusinessInput {
@@ -54,6 +55,7 @@ export async function createBusiness(
     .insert(businesses)
     .values({
       owner_id: session.user.id,
+      sync_token: randomBytes(24).toString('hex'),
       name: bizData.name,
       description: bizData.description ?? null,
       website: bizData.website ?? null,

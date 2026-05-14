@@ -112,3 +112,8 @@ CREATE TABLE IF NOT EXISTS connections (
   UNIQUE (requester_id, recipient_id),
   CONSTRAINT no_self_connect CHECK (requester_id != recipient_id)
 );
+
+-- Integrations columns (safe to run on existing databases)
+ALTER TABLE businesses ADD COLUMN IF NOT EXISTS sync_token TEXT UNIQUE;
+ALTER TABLE businesses ADD COLUMN IF NOT EXISTS last_synced_at TIMESTAMP;
+ALTER TABLE listings  ADD COLUMN IF NOT EXISTS external_id TEXT;
