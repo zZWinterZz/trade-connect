@@ -1,10 +1,10 @@
 -- Enums
-CREATE TYPE business_type AS ENUM ('supplier', 'buyer', 'both');
-CREATE TYPE business_category AS ENUM ('food & beverage', 'linen & laundry', 'cleaning supplies', 'maintenance', 'logistics', 'other');
-CREATE TYPE subscription_tier AS ENUM ('free', 'pro');
-CREATE TYPE connection_status AS ENUM ('pending', 'accepted', 'declined');
-CREATE TYPE frequency_type AS ENUM ('daily', 'weekly', 'monthly', 'one-off');
-CREATE TYPE urgency_type AS ENUM ('low', 'medium', 'high');
+DO $$ BEGIN CREATE TYPE business_type AS ENUM ('supplier', 'buyer', 'both'); EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+DO $$ BEGIN CREATE TYPE business_category AS ENUM ('food & beverage', 'linen & laundry', 'cleaning supplies', 'maintenance', 'logistics', 'other'); EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+DO $$ BEGIN CREATE TYPE subscription_tier AS ENUM ('free', 'pro'); EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+DO $$ BEGIN CREATE TYPE connection_status AS ENUM ('pending', 'accepted', 'declined'); EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+DO $$ BEGIN CREATE TYPE frequency_type AS ENUM ('daily', 'weekly', 'monthly', 'one-off'); EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+DO $$ BEGIN CREATE TYPE urgency_type AS ENUM ('low', 'medium', 'high'); EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
 -- Better Auth tables
 CREATE TABLE IF NOT EXISTS "user" (
