@@ -20,8 +20,12 @@ export default function LoginPage() {
     setError('')
     setLoading(true)
     try {
-      const { error: err } = await authClient.signIn.email({ email, password })
+      const { data, error: err } = await authClient.signIn.email({ email, password })
       if (err) throw new Error(err.message)
+      if ((data as { twoFactorRedirect?: boolean })?.twoFactorRedirect) {
+        router.push('/two-factor')
+        return
+      }
       router.push('/dashboard')
       router.refresh()
     } catch (e: unknown) {

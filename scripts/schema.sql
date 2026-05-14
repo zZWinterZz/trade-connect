@@ -117,3 +117,14 @@ CREATE TABLE IF NOT EXISTS connections (
 ALTER TABLE businesses ADD COLUMN IF NOT EXISTS sync_token TEXT UNIQUE;
 ALTER TABLE businesses ADD COLUMN IF NOT EXISTS last_synced_at TIMESTAMP;
 ALTER TABLE listings  ADD COLUMN IF NOT EXISTS external_id TEXT;
+
+-- Two-factor authentication
+ALTER TABLE "user" ADD COLUMN IF NOT EXISTS two_factor_enabled BOOLEAN DEFAULT FALSE;
+
+CREATE TABLE IF NOT EXISTS two_factor (
+  id TEXT PRIMARY KEY,
+  secret TEXT NOT NULL,
+  backup_codes TEXT NOT NULL,
+  user_id TEXT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
+  verified BOOLEAN NOT NULL DEFAULT TRUE
+);

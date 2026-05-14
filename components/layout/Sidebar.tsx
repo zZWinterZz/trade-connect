@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import { LayoutDashboard, Users, Package, ShoppingCart, Link2, Settings, Building2, LogOut, Plug } from 'lucide-react'
+import { LayoutDashboard, Users, Package, ShoppingCart, Link2, Settings, Building2, LogOut, Plug, Shield } from 'lucide-react'
 import { authClient } from '@/lib/auth-client'
 
 const navItems = [
@@ -12,6 +12,7 @@ const navItems = [
   { href: '/listings', label: 'My Listings', icon: Package },
   { href: '/needs', label: 'My Needs', icon: ShoppingCart },
   { href: '/connections', label: 'Connections', icon: Link2 },
+  { href: '/security', label: 'Security', icon: Shield },
   { href: '/integrations', label: 'Integrations', icon: Plug },
   { href: '/profile', label: 'Profile', icon: Settings },
 ]

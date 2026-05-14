@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Building2, Check } from 'lucide-react'
 import { authClient } from '@/lib/auth-client'
@@ -51,7 +50,7 @@ export default function RegisterPage() {
   const [step, setStep] = useState(0)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const router = useRouter()
+  const [done, setDone] = useState(false)
 
   const [account, setAccount] = useState<AccountData>({ email: '', password: '', confirm: '' })
   const [business, setBusiness] = useState<BusinessData>({
@@ -131,13 +130,32 @@ export default function RegisterPage() {
 
       if ('error' in result) throw new Error(String(result.error))
 
-      router.push('/dashboard')
-      router.refresh()
+      setDone(true)
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : 'Registration failed')
     } finally {
       setLoading(false)
     }
+  }
+
+  if (done) {
+    return (
+      <div className="min-h-full flex flex-col items-center justify-center bg-gray-50 px-4 py-12">
+        <div className="w-full max-w-lg text-center">
+          <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-teal-100">
+            <Check className="h-8 w-8 text-teal-700" />
+          </div>
+          <h1 className="text-2xl font-bold text-gray-900 mb-3">Check your email</h1>
+          <p className="text-gray-500 mb-6">
+            We&apos;ve sent a verification link to <strong>{account.email}</strong>.<br />
+            Click the link to activate your account.
+          </p>
+          <Link href="/login" className="text-sm font-medium text-teal-700 hover:text-teal-800">
+            Go to sign in →
+          </Link>
+        </div>
+      </div>
+    )
   }
 
   return (
